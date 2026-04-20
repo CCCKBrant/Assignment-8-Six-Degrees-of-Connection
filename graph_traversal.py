@@ -15,30 +15,41 @@ from collections import deque
 # ============================================================================
 
 def bfs(graph, start, target):
-    """
-    Find shortest path between two users using breadth-first search.
+    visited = {start}
+    queue = deque([(start, [start])])
+    while queue:
+        current, path = queue.popleft()
+        if current == target:
+            return path
+        for neighbor in graph[current]:
+            if neighbor not in visited:
+                visited.add(neighbor)
+                queue.append((neighbor, path + [neighbor]))
+    return []
+    # """
+    # Find shortest path between two users using breadth-first search.
     
-    Args:
-        graph: Dictionary where graph[user_id] = list of friend IDs
-        start: Starting user ID
-        target: Target user ID
+    # Args:
+    #     graph: Dictionary where graph[user_id] = list of friend IDs
+    #     start: Starting user ID
+    #     target: Target user ID
         
-    Returns:
-        List representing shortest path from start to target,
-        or empty list if no path exists
+    # Returns:
+    #     List representing shortest path from start to target,
+    #     or empty list if no path exists
         
-    Example:
-        graph = {0: [1, 2], 1: [0, 3], 2: [0], 3: [1]}
-        bfs(graph, 0, 3) returns [0, 1, 3]
-    """
-    # TODO: Implement BFS
-    # Hints:
-    # - Use a queue (deque) to track nodes to visit
-    # - Track visited nodes to avoid cycles
-    # - Track parent pointers to reconstruct path
-    # - Return path from start to target as a list
+    # Example:
+    #     graph = {0: [1, 2], 1: [0, 3], 2: [0], 3: [1]}
+    #     bfs(graph, 0, 3) returns [0, 1, 3]
+    # """
+    # # TODO: Implement BFS
+    # # Hints:
+    # # - Use a queue (deque) to track nodes to visit
+    # # - Track visited nodes to avoid cycles
+    # # - Track parent pointers to reconstruct path
+    # # - Return path from start to target as a list
     
-    pass
+    
 
 
 # ============================================================================
@@ -46,27 +57,37 @@ def bfs(graph, start, target):
 # ============================================================================
 
 def dfs(graph, start):
-    """
-    Find all users reachable from a starting user using depth-first search.
+    visited = set()
+
+    def dfs_recursive(node):
+        visited.add(node)
+        for neighbor in graph[node]:
+            if neighbor not in visited:
+                dfs_recursive(neighbor)
+
+    dfs_recursive(start)
+    return visited
+    # """
+    # Find all users reachable from a starting user using depth-first search.
     
-    Args:
-        graph: Dictionary where graph[user_id] = list of friend IDs
-        start: Starting user ID
+    # Args:
+    #     graph: Dictionary where graph[user_id] = list of friend IDs
+    #     start: Starting user ID
         
-    Returns:
-        Set of all user IDs reachable from start (including start itself)
+    # Returns:
+    #     Set of all user IDs reachable from start (including start itself)
         
-    Example:
-        graph = {0: [1, 2], 1: [0, 3], 2: [0], 3: [1], 4: [5], 5: [4]}
-        dfs(graph, 0) returns {0, 1, 2, 3}
-    """
-    # TODO: Implement DFS
-    # Hints:
-    # - Use recursion or a stack to explore deeply
-    # - Track visited nodes to avoid infinite loops
-    # - Return a set of all reachable user IDs
+    # Example:
+    #     graph = {0: [1, 2], 1: [0, 3], 2: [0], 3: [1], 4: [5], 5: [4]}
+    #     dfs(graph, 0) returns {0, 1, 2, 3}
+    # """
+    # # TODO: Implement DFS
+    # # Hints:
+    # # - Use recursion or a stack to explore deeply
+    # # - Track visited nodes to avoid infinite loops
+    # # - Return a set of all reachable user IDs
     
-    pass
+    
 
 
 # ============================================================================
